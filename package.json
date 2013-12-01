@@ -1,0 +1,8 @@
+{
+    "name": "websocket-bench",
+    "repository": "https://github.com/itbrandonsilva/websocket-bench",
+    "description": "Keep my websocket doodles here.",
+    "dependencies": {
+        "socket.io": "0.9.x"
+    }
+}
