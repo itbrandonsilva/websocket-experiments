@@ -38,18 +38,17 @@ io.sockets.on('connection', function (socket) {
     console.log("Client connected.");
     console.time('time');
 
-    var ms;
+    //var ms = new Date().getTime();
 
     socket.on('pong', function (data) {
         count++;
-        var now = new Date().getTime();
-        latency.push(now - ms);
-        ms = now;
-        socket.emit('ping', { msg: 'ping' });
+        //var now = new Date().getTime();
+        //latency.push(now - ms);
+        //ms = now;
+        //socket.emit('ping', { msg: 'ping' });
     });
 
-    var ms = new Date().getTime();
-    socket.emit('ping', { msg: 'ping' });
+    //socket.emit('ping', { msg: 'ping' });
 });
 
 process.on('SIGINT', function() {
@@ -57,6 +56,7 @@ process.on('SIGINT', function() {
     console.timeEnd('time');
     console.log("Count: " + count);
 
+/*
     var averageLatency;
     var totalLatency = 0;
     latency.forEach(function(l) {
@@ -65,6 +65,7 @@ process.on('SIGINT', function() {
 
     averageLatency = totalLatency/latency.length;
     console.log("Average latency: " + averageLatency);
+*/
 
     process.exit();
 });

@@ -1,8 +1,10 @@
 <script type="text/javascript" src="/js"></script>
 <script type="text/javascript">
     var socket = io.connect(window.location.href);
-    socket.on('ping', function (data) {
+    //socket.on('ping', function (data) {
+    setInterval(function () {
         socket.emit('pong', { msg: 'pong' });
-    });
+    }, 16);
+    //});
 </script>
 <h1>Testing</h1>
