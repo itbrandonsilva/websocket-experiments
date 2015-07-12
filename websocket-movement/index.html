@@ -1,0 +1,56 @@
+<script src="socket.io.js"></script>
+<script src="keypress.min.js"></script>
+<body>
+    <canvas id="game" width="600" height="600" style="border: 1px solid;">UH OH</canvas>
+    <script>
+    var inputs = {
+        up: false,
+        down: false,
+        left: false,
+        right: false
+    };
+    var keys = new window.keypress.Listener();
+    keys.register_many([
+        {
+            keys: 'up',
+            on_keydown: function () { inputs.up = true; console.log("DOWN")},
+            on_keyup: function () { inputs.up = false; }
+        },
+        {
+            keys: 'down',
+            on_keydown: function () { inputs.down = true; },
+            on_keyup: function () { inputs.down = false; }
+        },
+        {
+            keys: 'left',
+            on_keydown: function () { inputs.left = true; },
+            on_keyup: function () { inputs.left = false; }
+        },
+        {
+            keys: 'right',
+            on_keydown: function () { inputs.right = true; },
+            on_keyup: function () { inputs.right = false; }
+        }
+    ]);
+
+    var socket = io('http://' + window.location.hostname + ':80');
+
+    var position = {x: 50, y: 50};
+    var c = document.getElementById('game');
+    var ctx = c.getContext('2d');
+    setInterval(function () {
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.beginPath();
+        ctx.arc(position.x, position.y, 40, 0, 2*Math.PI);
+        ctx.stroke();
+        socket.emit('input', inputs);
+        console.log('EMITTING');
+    }, 33);
+
+    socket.on('position', function (data) {
+        console.log('POSITION');
+        position.x+=data.x;
+        position.y+=data.y;
+    });
+    </script>
+</body>
